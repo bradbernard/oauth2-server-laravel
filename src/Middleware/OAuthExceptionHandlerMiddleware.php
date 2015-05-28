@@ -21,8 +21,11 @@ class OAuthExceptionHandlerMiddleware implements Middleware
         } catch (OAuthException $e) {
 
             return new JsonResponse([
-                    'error'             => $e->errorType,
-                    'error_description' => $e->getMessage()
+                    'meta'  => [
+                        'code'          => 400,
+                        'error_type'    => $e->errorType,
+                        'error_message' => $e->getMessage(),
+                    ],
                 ],
                 $e->httpStatusCode,
                 $e->getHttpHeaders()
